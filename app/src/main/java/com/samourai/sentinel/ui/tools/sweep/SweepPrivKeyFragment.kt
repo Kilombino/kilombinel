@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.content.ClipboardManager
 import android.content.Context
 import android.os.Build
+import android.util.Log
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
