@@ -1,3 +1,29 @@
+# Kilombinel
+
+Fork of [wanderingking072/sentinel-android](https://github.com/wanderingking072/sentinel-android)
+(itself a fork of Samourai's Sentinel), a watch-only bitcoin wallet for Android.
+
+Why: since 2026-10-28 the Tor network requires the `Desc=3`/`Microdesc=3`
+protocols, which Tor 0.4.8 does not have. Sentinel bundled Tor 0.4.8 via
+kmp-tor 1.x and got stuck at "Bootstrapped 30%". Kilombinel moves to
+kmp-tor 2.6.0 with Tor 0.4.9.5.
+
+Changes on top of upstream `master`:
+- kmp-tor 1.4.4 -> `io.matthewnelson.kmp-tor:runtime` / `runtime-service` 2.6.0
+  + `resource-exec-tor` 409.5.0 (Tor 0.4.9.5). `TorKmpManager` rewritten, same interface.
+- Kotlin 2.2.21, KSP 2.2.21-2.0.4, Room 2.7.2, compileSdk 35 (required by kmp-tor 2.x).
+- Fix two compile errors left on upstream `master`.
+- `SentinelTorManager.setUp` keeps the first manager (kmp-tor 2.x returns the same
+  runtime per environment, so a second manager never received state events).
+- `kilombinel` product flavor: own applicationId (`com.kilombino.kilombinel`),
+  name and logo. The `production`/`staging` flavors still build plain Sentinel
+  with the Tor fix.
+
+Build: `./gradlew assembleKilombinelRelease` (JDK 17+, Android SDK 35), then
+zipalign + apksigner with your own key.
+
+---
+
 # Sentinel for Android
 
 ### Build:
