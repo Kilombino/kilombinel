@@ -25,7 +25,11 @@ object SentinelTorManager {
 
     fun setUp(application: Application) {
         appContext = application
-        torKmpManager = TorKmpManager(application)
+        // kmp-tor 2.x hands back the same TorRuntime for the same environment, so a
+        // second manager would never get state events. Keep the first one.
+        if (torKmpManager == null) {
+            torKmpManager = TorKmpManager(application)
+        }
     }
 
     fun getTorStateLiveData(): MutableLiveData<TorState> {
